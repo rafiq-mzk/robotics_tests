@@ -3,12 +3,14 @@
 Servo myservo;  // create servo object to control a servo
 #define LDR_DO 2
 #define LED_BUILTIN 1
+#define LED_BUILTIN1 3
 
 int pos = 0;    // variable to store the servo position
 
 void setup() {
   pinMode(LDR_DO, INPUT);
   pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(LED_BUILTIN1, OUTPUT);
   myservo.attach(9);  // attaches the servo on pin 9 to the servo object
 }
 
@@ -18,26 +20,29 @@ void  rotate()
   while (pos <= 180)
   {
     myservo.write(pos);
-    pos += 60;
-    delay(200);
+    pos += 1;
+    delay(10);
   }
   while (pos >= 0)
   {
     myservo.write(pos);
-    pos -= 60;
-    delay(200);
+    pos -= 1;
+    delay(10);
   }
 
 }
 
 void loop() {
+  myservo.write(0);
   if (digitalRead(LDR_DO) == LOW)
   {
     digitalWrite(LED_BUILTIN, HIGH);
+    digitalWrite(LED_BUILTIN1, LOW);
   }
   else
   {
     rotate();
+    digitalWrite(LED_BUILTIN1, HIGH);
     digitalWrite(LED_BUILTIN, LOW);
   }
 }
