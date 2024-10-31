@@ -1,0 +1,43 @@
+#include <Servo.h>
+
+Servo myservo;  // create servo object to control a servo
+#define LDR_DO 2
+#define LED_BUILTIN 1
+
+int pos = 0;    // variable to store the servo position
+
+void setup() {
+  pinMode(LDR_DO, INPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
+  myservo.attach(9);  // attaches the servo on pin 9 to the servo object
+}
+
+void  rotate()
+{
+  int pos = 0;
+  while (pos <= 180)
+  {
+    myservo.write(pos);
+    pos += 60;
+    delay(200);
+  }
+  while (pos >= 0)
+  {
+    myservo.write(pos);
+    pos -= 60;
+    delay(200);
+  }
+
+}
+
+void loop() {
+  if (digitalRead(LDR_DO) == LOW)
+  {
+    digitalWrite(LED_BUILTIN, HIGH);
+  }
+  else
+  {
+    rotate();
+    digitalWrite(LED_BUILTIN, LOW);
+  }
+}
